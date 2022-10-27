@@ -1,17 +1,20 @@
+import { animated, useSpring } from '@react-spring/web';
+import classNames from 'classnames';
 import { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
 import { Stats, StatsAction } from '../App';
 import { clamp } from '../Utils/Utils';
 
 interface ParameterProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-	min?: number | (() => number);
-	max?: number | (() => number);
+	min?: number;
+	max?: number;
+	isLocked?: boolean
 	level: number;
 	property: keyof Stats;
 	dispatch: (action: StatsAction) => void;
 	text: string;
 }
 
-function Parameter({ min = 0, max = 5, level, dispatch, property, children, text, ...props }: ParameterProps) {
+function Parameter({ min = 0, max = 5, level, dispatch, property, children, text, isLocked = false, className, ...props }: ParameterProps) {
 	const clampedLevel = calculateLevel(level);
 
 	useEffect(() => {
@@ -19,6 +22,16 @@ function Parameter({ min = 0, max = 5, level, dispatch, property, children, text
 			dispatch({ property, change: clampedLevel });
 		}
 	});
+
+	const [styles, api] = useSpring(() => ({ background: 'var(--white)' }));
+
+	useEffect(() => {
+		api.start({
+			background: 'var(--white)',
+			from: { background: 'var(--tint)' },
+			config: { duration: 1000 }
+		})
+	}, [clampedLevel, max])
 
 	function increase() {
 		changeCount(level + 1)
@@ -33,19 +46,18 @@ function Parameter({ min = 0, max = 5, level, dispatch, property, children, text
 	}
 
 	function calculateLevel(value: number) {
-		const minCount = min instanceof Function ? min() : min;
-		const maxCount = max instanceof Function ? max() : max;
-
-		return clamp(value, minCount, maxCount)
+		return clamp(value, min, max);
 	}
 
 	return (
-		<div {...props}>
-			<label>{text}</label>
-			<button onClick={decrease}>-</button>
-			{children}
-			<button onClick={increase}>+</button>
-		</div>
+		<animated.div style={styles} className={classNames('param', className)}>
+			<div>{text}</div>
+			<div className='changeButtonsContainer'>
+				<button onClick={decrease} className='changeButton' disabled={isLocked || level === min}>-</button>
+				{children}
+				<button onClick={increase} className='changeButton' disabled={isLocked || level === max}> +</button>
+			</div>
+		</animated.div>
 	)
 }
 

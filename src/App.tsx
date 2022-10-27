@@ -108,24 +108,24 @@ function App() {
 			{ComposeParameter("Интеллект", "intelligence")}
 			{ComposeParameter("Харизма", "charisma")}
 
-			{ComposeParameter("Жизненная сила", "life", `${life}/${strength + 3}`, { max: () => strength + 3 })}
+			{ComposeParameter("Жизненная сила", "life", `${life}/${strength + 3}`, { max: strength + 3 })}
 
-			<div>Уклонение: {evasion}</div>
-			<div>Энергичность: {energy}</div>
+			{ComposeParameter("Уклонение", "evasion", evasion, { isLocked: true, min: 10, max: 15 })}
+			{ComposeParameter("Энергичность", "energy", energy, { isLocked: true, max: 10 })}
 
-			{ComposeParameter("Атака", "attack", `${attack}/${strength}`)}
+			{ComposeParameter("Атака", "attack", `${attack}/${strength}`, { max: strength })}
 
-			{ComposeParameter("Стелс", "stealth", `${stealth}/${dexterity}`)}
-			{ComposeParameter("Стрельба из лука", "archery", `${archery}/${dexterity}`)}
+			{ComposeParameter("Стелс", "stealth", `${stealth}/${dexterity}`, { max: dexterity })}
+			{ComposeParameter("Стрельба из лука", "archery", `${archery}/${dexterity}`, { max: dexterity })}
 
-			{ComposeParameter("Обучаемость", "learnability", `${learnability}/${intelligence}`)}
-			{ComposeParameter("Выживание", "survival", `${survival}/${intelligence}`)}
-			{ComposeParameter("Медицина", "medicine", `${medicine}/${intelligence}`)}
+			{ComposeParameter("Обучаемость", "learnability", `${learnability}/${intelligence}`, { max: intelligence })}
+			{ComposeParameter("Выживание", "survival", `${survival}/${intelligence}`, { max: intelligence })}
+			{ComposeParameter("Медицина", "medicine", `${medicine}/${intelligence}`, { max: intelligence })}
 
-			{ComposeParameter("Запугивание", "intimidation", `${intimidation}/${charisma}`)}
-			{ComposeParameter("Проницательность", "insight", `${insight}/${charisma}`)}
-			{ComposeParameter("Внешний вид", "appearance", `${appearance}/${charisma}`)}
-			{ComposeParameter("Манипулирование", "manipulation", `${manipulation}/${charisma}`)}
+			{ComposeParameter("Запугивание", "intimidation", `${intimidation}/${charisma}`, { max: charisma })}
+			{ComposeParameter("Проницательность", "insight", `${insight}/${charisma}`, { max: charisma })}
+			{ComposeParameter("Внешний вид", "appearance", `${appearance}/${charisma}`, { max: charisma })}
+			{ComposeParameter("Манипулирование", "manipulation", `${manipulation}/${charisma}`, { max: charisma })}
 		</div>
 	);
 }
