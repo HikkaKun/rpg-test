@@ -62,7 +62,13 @@ html {
 	background-color: var(--button);
 }
 
+.change-button:hover,
+.custom-button:hover {
+	cursor: pointer;
+}
+
 .change-button:disabled {
+	cursor: auto;
 	background-color: var(--tint);
 }
 
