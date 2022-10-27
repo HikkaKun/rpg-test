@@ -1,38 +1,38 @@
-import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
+import { Stats, StatsAction } from '../App';
 import { clamp } from '../Utils/Utils';
 
 interface ParameterProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
 	min?: number | (() => number);
 	max?: number | (() => number);
-	initial: number;
-	updateInParent: (value: number) => void;
+	level: number;
+	property: keyof Stats;
+	dispatch: (action: StatsAction) => void;
 	text: string;
 }
 
-function Parameter({ min = 0, max = 20, initial, updateInParent, className, text, ...props }: ParameterProps) {
-	const calculatedInitial = calculateCount(initial);
+function Parameter({ min = 0, max = 5, level, dispatch, property, children, text, ...props }: ParameterProps) {
+	const clampedLevel = calculateLevel(level);
 
-	if (initial !== calculatedInitial) {
-		updateInParent(calculatedInitial);
-	}
+	useEffect(() => {
+		if (level !== clampedLevel) {
+			dispatch({ property, change: clampedLevel });
+		}
+	});
 
 	function increase() {
-		changeCount(initial + 1)
+		changeCount(level + 1)
 	}
 
 	function decrease() {
-		changeCount(initial - 1)
-	}
-
-	function handleInputChange(event: any) {
-		changeCount(parseInt(event.target.value));
+		changeCount(level - 1)
 	}
 
 	function changeCount(value: number) {
-		updateInParent(calculateCount(value));
+		dispatch({ property, change: calculateLevel(value) });
 	}
 
-	function calculateCount(value: number) {
+	function calculateLevel(value: number) {
 		const minCount = min instanceof Function ? min() : min;
 		const maxCount = max instanceof Function ? max() : max;
 
@@ -40,17 +40,15 @@ function Parameter({ min = 0, max = 20, initial, updateInParent, className, text
 	}
 
 	return (
-		<div className={className} {...props}>
+		<div {...props}>
 			<label>{text}</label>
 			<button onClick={decrease}>-</button>
-			<input
-				type="number"
-				value={initial}
-				onChange={handleInputChange}
-			/>
+			{children}
 			<button onClick={increase}>+</button>
 		</div>
 	)
 }
 
 export default Parameter;
+
+export type { ParameterProps }
