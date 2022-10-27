@@ -1,6 +1,9 @@
 import { useReducer } from 'react';
+import ExportButton from './components/ExportButton';
+import ImportButton from './components/ImportButton';
 import Parameter, { ParameterProps } from './components/Parameter';
 import './styles/App.css';
+import { parseJsonFile } from './Utils/Utils';
 
 interface Stats {
 	//base stats
@@ -34,8 +37,8 @@ interface Stats {
 }
 
 interface StatsAction {
-	property: keyof Stats
-	change: number;
+	property?: keyof Stats;
+	change: number | Stats;
 }
 
 type ComposeParameterProps = Omit<ParameterProps, 'level' | 'text' | 'property' | 'children' | 'dispatch'>
@@ -61,14 +64,18 @@ const initialStats: Stats = {
 }
 
 function reducer(state: Stats, action: StatsAction) {
+	if (action.change instanceof Object)
+		return { ...action.change };
+
 	const { property, change } = action;
+
 	switch (property) {
 		case 'intelligence':
 			return { ...state, [property]: change, energy: state.dexterity + change };
 		case 'dexterity':
 			return { ...state, [property]: change, energy: state.intelligence + change, evasion: 10 + change }
 		default:
-			return { ...state, [property]: change }
+			return { ...state, [property!]: change }
 	}
 }
 
@@ -103,6 +110,12 @@ function App() {
 
 	return (
 		<div className="App">
+			<div className="exportImportContainer">
+				<ExportButton data={stats} />
+				<ImportButton dispatch={dispatchStats} />
+			</div>
+
+
 			{ComposeParameter("Сила", "strength")}
 			{ComposeParameter("Ловкость", "dexterity")}
 			{ComposeParameter("Интеллект", "intelligence")}
