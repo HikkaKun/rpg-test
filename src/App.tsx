@@ -1,5 +1,6 @@
-import { useReducer, useState } from 'react';
+import { useReducer } from 'react';
 import Parameter, { ParameterProps } from './components/Parameter';
+import './styles/App.css';
 
 interface Stats {
 	//base stats
@@ -121,10 +122,10 @@ function App() {
 			{ComposeParameter("Выживание", "survival", `${survival}/${intelligence}`)}
 			{ComposeParameter("Медицина", "medicine", `${medicine}/${intelligence}`)}
 
-			{ComposeParameter("Запугивание", "stealth", `${intimidation}/${charisma}`)}
-			{ComposeParameter("Проницательность", "stealth", `${insight}/${charisma}`)}
-			{ComposeParameter("Внешний вид", "stealth", `${appearance}/${charisma}`)}
-			{ComposeParameter("Манипулирование", "stealth", `${manipulation}/${charisma}`)}
+			{ComposeParameter("Запугивание", "intimidation", `${intimidation}/${charisma}`)}
+			{ComposeParameter("Проницательность", "insight", `${insight}/${charisma}`)}
+			{ComposeParameter("Внешний вид", "appearance", `${appearance}/${charisma}`)}
+			{ComposeParameter("Манипулирование", "manipulation", `${manipulation}/${charisma}`)}
 		</div>
 	);
 }
