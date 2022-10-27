@@ -31,7 +31,7 @@ function Parameter({ min = 0, max = 5, level, dispatch, property, children, text
 			from: { background: 'var(--tint)' },
 			config: { duration: 1000 }
 		})
-	}, [clampedLevel, max])
+	}, [clampedLevel, max, api])
 
 	function increase() {
 		changeCount(level + 1)
