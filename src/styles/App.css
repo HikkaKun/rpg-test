@@ -1,3 +1,12 @@
+@import url('../fonts/fonts.css');
+
+:root {
+	--background: #46425e;
+	--button: #5b768d;
+	--white: #f6c6a8;
+	--tint: #d17c7c;
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -9,11 +18,6 @@
 a:link {
 	color: black;
 	text-decoration: none;
-}
-
-@font-face {
-	font-family: 'monogram';
-	src: url('../fonts/monogram-extended.ttf');
 }
 
 html {
@@ -28,12 +32,16 @@ html {
 }
 
 .param,
-.changeButtonsContainer,
-.exportImportContainer {
+.change-buttons-container,
+.export-import-container {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
+
+/*
+	Parameter component
+*/
 
 .param {
 	width: 360px;
@@ -42,11 +50,11 @@ html {
 	border-radius: 5px;
 }
 
-.changeButtonsContainer {
+.change-buttons-container {
 	width: 120px;
 }
 
-.changeButton {
+.change-button {
 	width: 30px;
 	height: 30px;
 	border: none;
@@ -54,31 +62,28 @@ html {
 	background-color: var(--button);
 }
 
-.changeButton:disabled {
+.change-button:disabled {
 	background-color: var(--tint);
 }
 
-:root {
-	--background: #46425e;
-	--button: #5b768d;
-	--white: #f6c6a8;
-	--tint: #d17c7c;
-}
+/*
+	export/input buttons
+*/
 
 input[type="file"] {
 	display: none;
 }
 
-.customButton {
+.export-import-container {
+	width: 380px;
+	margin: 5px 0;
+}
+
+.custom-button {
 	display: inline-block;
 	width: 187.5px;
 	height: 40px;
 	background-color: var(--button);
 	border-radius: 5px;
 	padding-top: 8px;
-}
-
-.exportImportContainer {
-	width: 380px;
-	margin: 5px 0;
 }

@@ -8,7 +8,7 @@ interface ImportButtonProps {
 function ImportButton({ dispatch }: ImportButtonProps) {
 	return (
 		<>
-			<label htmlFor="importStats" className="customButton">Загрузить</label>
+			<label htmlFor="importStats" className="custom-button">Загрузить</label>
 			<input id="importStats" type="file" onChange={async (event) => {
 				if (event?.target?.files) {
 					const data = await parseJsonFile(event.target.files[0]) as Stats;

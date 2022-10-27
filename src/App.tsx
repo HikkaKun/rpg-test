@@ -3,7 +3,6 @@ import ExportButton from './components/ExportButton';
 import ImportButton from './components/ImportButton';
 import Parameter, { ParameterProps } from './components/Parameter';
 import './styles/App.css';
-import { parseJsonFile } from './Utils/Utils';
 
 interface Stats {
 	//base stats
@@ -110,7 +109,7 @@ function App() {
 
 	return (
 		<div className="App">
-			<div className="exportImportContainer">
+			<div className="export-import-container">
 				<ExportButton data={stats} />
 				<ImportButton dispatch={dispatchStats} />
 			</div>

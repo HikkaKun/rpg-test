@@ -1,10 +1,9 @@
 import { animated, useSpring } from '@react-spring/web';
-import classNames from 'classnames';
-import { DetailedHTMLProps, HTMLAttributes, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Stats, StatsAction } from '../App';
 import { clamp } from '../Utils/Utils';
 
-interface ParameterProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface ParameterProps {
 	min?: number;
 	max?: number;
 	isLocked?: boolean
@@ -12,9 +11,10 @@ interface ParameterProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement
 	property: keyof Stats;
 	dispatch: (action: StatsAction) => void;
 	text: string;
+	children?: ReactNode;
 }
 
-function Parameter({ min = 0, max = 5, level, dispatch, property, children, text, isLocked = false, className, ...props }: ParameterProps) {
+function Parameter({ min = 0, max = 5, level, dispatch, property, children, text, isLocked = false }: ParameterProps) {
 	const clampedLevel = calculateLevel(level);
 
 	useEffect(() => {
@@ -50,12 +50,12 @@ function Parameter({ min = 0, max = 5, level, dispatch, property, children, text
 	}
 
 	return (
-		<animated.div style={styles} className={classNames('param', className)}>
+		<animated.div style={styles} className='param'>
 			<div>{text}</div>
-			<div className='changeButtonsContainer'>
-				<button onClick={decrease} className='changeButton' disabled={isLocked || level === min}>-</button>
+			<div className='change-buttons-container'>
+				<button onClick={decrease} className='change-button' disabled={isLocked || level === min}>-</button>
 				{children}
-				<button onClick={increase} className='changeButton' disabled={isLocked || level === max}> +</button>
+				<button onClick={increase} className='change-button' disabled={isLocked || level === max}> +</button>
 			</div>
 		</animated.div>
 	)

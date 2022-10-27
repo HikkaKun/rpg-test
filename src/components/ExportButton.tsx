@@ -9,7 +9,9 @@ function ExportButton({ data }: ExportButtonProps) {
 			download="character.json"
 			target="_blank"
 			rel="noreferrer"
-		><label className="customButton">Сохранить</label></a>
+		>
+			<label className="custom-button">Сохранить</label>
+		</a>
 	)
 }
 
